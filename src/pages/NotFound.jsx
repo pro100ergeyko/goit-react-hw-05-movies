@@ -1,4 +1,4 @@
-const Movies = () => {
+const NotFound = () => {
   return (
     <main>
       <h1>Movies</h1>
@@ -19,4 +19,4 @@ const Movies = () => {
   );
 };
 
-export default Movies;
+export default NotFound;
