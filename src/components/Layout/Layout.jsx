@@ -1,41 +1,28 @@
+import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-`;
-
-const StyledLink = styled(NavLink)`
-  color: black;
-
-  &.active {
-    color: orange;
-  }
-`;
+import { Loader } from 'components/Loader/Loader';
+import { Container, NavItem, NavList } from './Layout.styled';
 
 export const Layout = () => {
   return (
-    <Wrapper>
-      <header>
-        <ul>
-          <li>
-            <StyledLink to="/create" end>
-              Create quiz
-            </StyledLink>
-          </li>
-          <li>
-            <StyledLink to="/quizzes" end>
-              Quiz list
-            </StyledLink>
-          </li>
-        </ul>
-      </header>
-      <Outlet />
-    </Wrapper>
+    <Container>
+      <NavList>
+        <NavItem>
+          <NavLink to="/">Home</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/movies">Movies</NavLink>
+        </NavItem>
+      </NavList>
+      <main>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+        <ToastContainer />
+      </main>
+    </Container>
   );
 };

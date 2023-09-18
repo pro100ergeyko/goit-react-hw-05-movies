@@ -1,21 +1,51 @@
+import { useEffect, useState } from 'react';
+import fethTmdbAPI from 'helpers/TmdbAPI';
+import { Loader } from 'components/Loader/Loader';
+import { SearchMovies } from 'components/SearchMovies/SearchMovies';
+import { SearchMovieItems } from 'components/SearchMovieItems/SearchMovieItems';
+
 const Movies = () => {
+  const [serchQuery, setSerchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(true);
+  const [searchItems, setSearchItems] = useState([]);
+
+  useEffect(() => {
+    if (!serchQuery) {
+      return;
+    }
+    function fetchMoviesGalery(serchQuery) {
+      setIsLoading(true);
+      setIsError(true);
+
+      fethTmdbAPI('search/movie', { query: serchQuery })
+        .then(resp => {
+          setSearchItems([...resp.results]);
+        })
+        .catch(error => {
+          console.log(error);
+          setIsLoading(false);
+          setIsError(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          setIsError(false);
+        });
+    }
+
+    fetchMoviesGalery(serchQuery);
+  }, [serchQuery]);
+
+  const handleSearch = serchQuery => {
+    setSerchQuery(serchQuery);
+  };
+
   return (
-    <main>
-      <h1>Movies</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-        laborum amet ab cumque sit nihil dolore modi error repudiandae
-        perspiciatis atque voluptas corrupti, doloribus ex maiores quam magni
-        mollitia illum dolor quis alias in sequi quod. Sunt ex numquam hic
-        asperiores facere natus sapiente cum neque laudantium quam, expedita
-        voluptates atque quia aspernatur saepe illo, rem quasi praesentium
-        aliquid sed inventore obcaecati veniam? Nisi magnam vero, dolore
-        praesentium totam ducimus similique asperiores culpa, eius amet
-        repudiandae quam ut. Architecto commodi, tempore ut nostrum voluptas
-        dolorum illum voluptatum dolores! Quas perferendis quis alias excepturi
-        eaque voluptatibus eveniet error, nulla rem iusto?
-      </p>
-    </main>
+    <>
+      <SearchMovies onSubmit={handleSearch} />
+      {isLoading && <Loader />}
+      <ul>{!isError && <SearchMovieItems items={searchItems} />}</ul>
+    </>
   );
 };
 

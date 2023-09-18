@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-export default async function fethTmdbAPI(serchQuery, param = {}) {
+export default async function fethTmdbAPI(serchQuery, parametr = {}) {
   const API_KEY = '3e1a060e5e8ff6eb595e5a556d62f715';
+  // API Read Access Token - eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZTFhMDYwZTVlOGZmNmViNTk1ZTVhNTU2ZDYyZj
+  // cxNSIsInN1YiI6IjY1MDFlYzU3ZDdkY2QyMDBmZmVjNTc2MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxf
+  // Q.tz-APzbt_4VqGJqgmYgu3xbJHWTEhL7PShoQhlEtjYQ
 
   const serchConfig = {
     method: 'get',
@@ -9,7 +12,7 @@ export default async function fethTmdbAPI(serchQuery, param = {}) {
     headers: { accept: 'application/json' },
     params: {
       api_key: API_KEY,
-      ...param,
+      ...parametr,
     },
   };
 
