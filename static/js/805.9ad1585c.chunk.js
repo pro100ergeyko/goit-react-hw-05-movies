@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgoit_react_hw_05_movies=self.webpackChunkgoit_react_hw_05_movies||[]).push([[805],{805:function(t,e,o){o.r(e);var s=o(184);e.default=function(){return(0,s.jsx)("div",{children:(0,s.jsx)("img",{src:"https://aioseo.com/wp-content/uploads/2021/04/how-to-find-and-fix-404-errors-in-wordpress.png.webp",alt:"Not found",width:"960px"})})}}}]);
+//# sourceMappingURL=805.9ad1585c.chunk.js.map
