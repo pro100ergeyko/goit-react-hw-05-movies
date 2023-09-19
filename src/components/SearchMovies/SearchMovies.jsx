@@ -1,56 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { FcSearch } from 'react-icons/fc';
-import { MoviesButton, MoviesForm, MoviesInput } from './SearchMovies.styled';
+// import { useEffect, useRef, useState } from 'react';
+// import { useSearchParams } from 'react-router-dom';
+// import { toast } from 'react-toastify';
+// import { FcSearch } from 'react-icons/fc';
+import { MoviesForm, MoviesInput } from './SearchMovies.styled';
 
-export const SearchMovies = props => {
-  const [nextSerchQuery, setNextSerchQuery] = useState('');
-  const [prevSerchQuery, setPrevSerchQuery] = useState('');
-  const [serchParams, setSerchParams] = useSearchParams();
-  const findMovies = serchParams.get('findMovies') ?? '';
-
-  const isFirstSearch = useRef(true);
-
-  const handleChange = evt => {
-    const value = evt.currentTarget.value;
-    if (value === '') {
-      setNextSerchQuery('');
-      setSerchParams({});
-      return;
-    }
-
-    setSerchParams({ findMovies: value });
-    setNextSerchQuery(value);
+export const SearchMovies = ({ value, onChange }) => {
+  const handleSubmit = e => {
+    e.preventDefault();
   };
+  // const [nextSerchQuery, setNextSerchQuery] = useState('');
+  // const [prevSerchQuery, setPrevSerchQuery] = useState('');
+  // const [serchParams, setSerchParams] = useSearchParams();
+  // const findMovies = serchParams.get('findMovies') ?? '';
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
+  // const isFirstSearch = useRef(true);
 
-    if (!nextSerchQuery) {
-      toast.info("👈 Please don't be stupid, enter the search value.");
-      return;
-    }
+  // const handleChange = evt => {
+  //   const value = evt.currentTarget.value;
+  //   if (value === '') {
+  //     setNextSerchQuery('');
+  //     setSerchParams({});
+  //     return;
+  //   }
 
-    if (nextSerchQuery === prevSerchQuery) {
-      toast.info(
-        `${nextSerchQuery} - be creative 😊, enter a new search value 👍`
-      );
-      return;
-    }
+  //   setSerchParams({ findMovies: value });
+  //   setNextSerchQuery(value);
+  // };
 
-    setPrevSerchQuery(nextSerchQuery);
-    props.onSubmit(nextSerchQuery);
-    setNextSerchQuery('');
-  };
+  // const handleSubmit = evt => {
+  //   evt.preventDefault();
 
-  useEffect(() => {
-    if (findMovies && isFirstSearch.current) {
-      setPrevSerchQuery(findMovies);
-      props.onSubmit(findMovies);
-    }
-    isFirstSearch.current = false;
-  }, [setPrevSerchQuery, props, findMovies, isFirstSearch]);
+  //   if (!nextSerchQuery) {
+  //     toast.info("👈 Please don't be stupid, enter the search value.");
+  //     return;
+  //   }
+
+  //   if (nextSerchQuery === prevSerchQuery) {
+  //     toast.info(
+  //       `${nextSerchQuery} - be creative 😊, enter a new search value 👍`
+  //     );
+  //     return;
+  //   }
+
+  //   setPrevSerchQuery(nextSerchQuery);
+  //   props.onSubmit(nextSerchQuery);
+  //   setNextSerchQuery('');
+  // };
+
+  // useEffect(() => {
+  //   if (findMovies && isFirstSearch.current) {
+  //     setPrevSerchQuery(findMovies);
+  //     props.onSubmit(findMovies);
+  //   }
+  //   isFirstSearch.current = false;
+  // }, [setPrevSerchQuery, props, findMovies, isFirstSearch]);
 
   return (
     <>
@@ -59,13 +62,13 @@ export const SearchMovies = props => {
           className="MoviesInput"
           type="text"
           name="nextSerchQuery"
-          value={nextSerchQuery}
-          onChange={handleChange}
+          value={value}
+          onChange={e => onChange(e.target.value)}
         />
-        <MoviesButton type="submit">
+        {/* <MoviesButton type="submit">
           <FcSearch />
           Search
-        </MoviesButton>
+        </MoviesButton> */}
       </MoviesForm>
     </>
   );

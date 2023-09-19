@@ -2,23 +2,27 @@ import { useEffect, useState } from 'react';
 import fethTmdbAPI from 'helpers/TmdbAPI';
 import { Loader } from 'components/Loader/Loader';
 import { SearchMovies } from 'components/SearchMovies/SearchMovies';
-import { SearchMovieItems } from 'components/SearchMovieItems/SearchMovieItems';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+import { useSearchParams } from 'react-router-dom';
 
 const Movies = () => {
-  const [serchQuery, setSerchQuery] = useState('');
+  // const [serchQuery, setSerchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(true);
   const [searchItems, setSearchItems] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const findMovies = searchParams.get('findMovies') ?? '';
 
   useEffect(() => {
-    if (!serchQuery) {
+    if (!findMovies) {
+      setSearchItems([]);
       return;
     }
-    function fetchMoviesGalery(serchQuery) {
+    function fetchMoviesGalery(findMovies) {
       setIsLoading(true);
       setIsError(true);
 
-      fethTmdbAPI('search/movie', { query: serchQuery })
+      fethTmdbAPI('search/movie', { query: findMovies })
         .then(resp => {
           setSearchItems([...resp.results]);
         })
@@ -33,18 +37,19 @@ const Movies = () => {
         });
     }
 
-    fetchMoviesGalery(serchQuery);
-  }, [serchQuery]);
+    fetchMoviesGalery(findMovies);
+  }, [findMovies]);
 
-  const handleSearch = serchQuery => {
-    setSerchQuery(serchQuery);
+  const handleSearch = findMovies => {
+    const nextParams = findMovies !== '' && { findMovies };
+    setSearchParams(nextParams);
   };
 
   return (
     <>
-      <SearchMovies onSubmit={handleSearch} />
+      <SearchMovies value={findMovies} onChange={handleSearch} />
       {isLoading && <Loader />}
-      <ul>{!isError && <SearchMovieItems items={searchItems} />}</ul>
+      <ul>{!isError && <MoviesList items={searchItems} />}</ul>
     </>
   );
 };

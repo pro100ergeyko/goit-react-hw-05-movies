@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Item } from './SearchMovieItems.styled';
+import { Item, NothingWasFound } from './MoviesList.styled';
 
-export const SearchMovieItems = ({ items }) => {
+export const MoviesList = ({ items }) => {
   const location = useLocation();
 
   return items.length !== 0 ? (
@@ -16,7 +16,10 @@ export const SearchMovieItems = ({ items }) => {
     })
   ) : (
     <li>
-      <p>Nothing was found for your request. Change it, search again</p>
+      <NothingWasFound>
+        Nothing was found for your request 🤔. <br />
+        Change it, search again 😉
+      </NothingWasFound>
     </li>
   );
 };

@@ -2,7 +2,8 @@ import fethTmdbAPI from 'helpers/TmdbAPI';
 import { useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
 import { Title, Wraper } from './Trending.styled';
-import { TrendingList } from 'components/TrendingList/TrendingList';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+// import { TrendingList } from 'components/TrendingList/TrendingList';
 // import { useLocation } from 'react-router-dom';
 
 export const Trending = () => {
@@ -36,7 +37,7 @@ export const Trending = () => {
         <Wraper>
           <Title>Today trending</Title>
           <ol>
-            <TrendingList trendingItems={trendingItems} />
+            <MoviesList items={trendingItems} />
           </ol>
         </Wraper>
       )}
