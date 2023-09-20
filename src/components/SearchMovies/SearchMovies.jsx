@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import { MoviesForm, MoviesInput } from './SearchMovies.styled';
 
-export const SearchMovies = ({ value, onChange }) => {
-  const handleSubmit = e => {
-    e.preventDefault();
+export const SearchMovies = ({ onChange }) => {
+  const [query, setQuery] = useState('');
+
+  const handleChange = evt => {
+    setQuery(evt.target.value);
+  };
+
+  const handleSubmit = evt => {
+    evt.preventDefault();
     // console.log(value);
-    onChange(e.target.value);
+    onChange(query);
   };
 
   return (
@@ -14,8 +21,8 @@ export const SearchMovies = ({ value, onChange }) => {
           className="MoviesInput"
           type="text"
           name="nextSerchQuery"
-          value={value}
-          onChange={e => onChange(e.target.value)}
+          value={query}
+          onChange={handleChange}
         />
         {/* <MoviesButton type="submit">
           <FcSearch />
